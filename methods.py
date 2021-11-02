@@ -11,8 +11,8 @@ response2 = requests.head(URL)
 print(response2.status_code, response2.text)
 # Апи отдает ответ 400, сервер не смог обработать запрс из-за невепрного синтаксиса
 
-metod_get = {"method": "GET"}
-response3 = requests.get(URL, params=metod_get)
+method_get = {"method": "GET"}
+response3 = requests.get(URL, params=method_get)
 print(response3.status_code, response3.text)
 # Апи отдает успешный ответ {"success":"!"}
 
