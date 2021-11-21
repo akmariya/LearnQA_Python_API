@@ -45,4 +45,4 @@ class TestUserRegistration(BaseCase):
         data["email"] = email
         response = MyRequest.post("/user", data=data)
         Assertions.assert_status_code(response, 200)
-        Assertions.assert_json_value_have_name(response, "id")
+        Assertions.assert_json_value_has_name(response, "id")
