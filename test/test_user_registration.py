@@ -4,10 +4,13 @@ from lib.assertions import Assertions
 import pytest
 from lib.utils import random_str
 from lib.user_data import user_creation_data
+import allure
 
 
+@allure.epic("Test user registration")
 class TestUserRegistration(BaseCase):
 
+    @allure.description("Registration with invalid email")
     def test_registration_with_invalid_format_email(self):
 
         data = user_creation_data()
@@ -22,6 +25,8 @@ class TestUserRegistration(BaseCase):
     fields = ("password", "username", "firstName", "lastName", "email")
 
     @pytest.mark.parametrize("empty_value", fields)
+    @allure.title("parametrized test without [{empty_value}] field")
+    @allure.description("registration without some data")
     def test_registration_without_all_data(self, empty_value):
         data = user_creation_data()
         data[empty_value] = None
@@ -29,6 +34,7 @@ class TestUserRegistration(BaseCase):
         Assertions.assert_status_code(response, 400)
         Assertions.assert_output_text(response, f"The following required params are missed: {empty_value}")
 
+    @allure.description("Registrate user with short name")
     def test_create_user_with_short_name(self):
         data = user_creation_data()
         shortname = "m"

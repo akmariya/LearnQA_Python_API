@@ -1,20 +1,24 @@
+from allure_commons.types import Severity
+
 from lib.base_case import BaseCase
 from lib.my_request import MyRequest
 from lib.assertions import Assertions
 from lib.user_data import user_creation_data
 from lib.utils import random_str
+import allure
 
 
+@allure.epic("Delete user")
 class TestUserDelete(BaseCase):
 
+    @allure.description("User not allowed to delete user with id 2")
+    @allure.feature("Delete user. Positive case")
+    @allure.severity(Severity.MINOR)
     def test_delete_user_with_id_2(self):
         id = 2
         data = {
-
             'email': 'vinkotov@example.com',
-
             'password': '1234'
-
         }
 
         # login
@@ -32,6 +36,9 @@ class TestUserDelete(BaseCase):
         Assertions.assert_status_code(response2, 400)
         Assertions.assert_output_text(response2, "Please, do not delete test users with ID 1, 2, 3, 4 or 5.")
 
+    @allure.description("User delete user")
+    @allure.feature("Delete user. Positive case")
+    @allure.severity(Severity.CRITICAL)
     def test_delete_user(self):
         email = random_str(5) + '@example.com'
         data = user_creation_data()
@@ -63,6 +70,9 @@ class TestUserDelete(BaseCase):
         Assertions.assert_status_code(response4, 404)
         Assertions.assert_output_text(response4, "User not found")
 
+    @allure.description("User can't delete another user")
+    @allure.feature("Delete user. Negative case")
+    @allure.severity(Severity.CRITICAL)
     def test_delete_wrong_user(self):
 
         # create 1 user
